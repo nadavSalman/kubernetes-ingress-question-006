@@ -1,0 +1,3 @@
+microservices:
+ - app-a
+ - app-b

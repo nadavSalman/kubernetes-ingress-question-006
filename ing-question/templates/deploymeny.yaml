@@ -1,0 +1,34 @@
+{{- range .Values.microservices }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    component: "backend"
+    app: {{ . | quote }}
+  name: {{ . | quote }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ . | quote }}
+      component: "backend"
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        component: "backend"
+        app: {{ . | quote }}
+    spec:
+      containers:
+      - image: hashicorp/http-echo
+        args:
+          - {{ printf "-text=%s"  ( . | upper)   }}
+          - "-listen=:8080"
+        ports:
+        - name: main-port
+          containerPort: 8080
+        name: http-echo
+---
+{{- end }}

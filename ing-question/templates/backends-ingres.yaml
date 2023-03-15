@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  generation: 1
+  name: backend
+
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: kubernetes.backends.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: backend
+            port:
+              number: 80
+        path: /
+        pathType: Exact

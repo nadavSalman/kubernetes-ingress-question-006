@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    component: "backend"
+    app.kubernetes.io/managed-by: Helm
+  name: backend
+
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    component: "backend"
+  sessionAffinity: None
+  type: ClusterIP
